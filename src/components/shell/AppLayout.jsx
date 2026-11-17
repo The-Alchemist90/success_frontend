@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Bell, BookOpen, Compass, FolderOpen, LogOut, Menu, Newspaper, UserRound, Users, UsersRound, X } from 'lucide-react'
 import Avatar from '../Avatar'
+import NotificationBell from '../notifications/NotificationBell'
 import { LangToggle, Logo, ThemeToggle } from '../ui'
 import { useAuth } from '../../auth/AuthContext'
+import { NotificationsProvider } from '../../lib/notifications'
 import { usePrefs } from '../../lib/prefs'
 
 const NAV = [
   { key: 'news', to: '/', Icon: Newspaper, end: true },
-  { key: 'courses', Icon: BookOpen },
+  { key: 'courses', to: '/learn', Icon: BookOpen },
   { key: 'mentoring', Icon: Compass },
   { key: 'friends', Icon: Users },
   { key: 'circles', Icon: UsersRound },
@@ -74,7 +76,7 @@ function SideUser() {
   )
 }
 
-export default function AppLayout() {
+function Frame() {
   const { user } = useAuth()
   const { t } = usePrefs()
   const [open, setOpen] = useState(false)
@@ -104,6 +106,7 @@ export default function AppLayout() {
           <div className="hidden sm:block">
             <LangToggle />
           </div>
+          <NotificationBell />
           <ThemeToggle />
           <Avatar user={user} size="sm" className="ml-1 hidden sm:flex" />
         </div>
@@ -139,9 +142,22 @@ export default function AppLayout() {
         </div>
       )}
 
-      <main className="lg:pl-72">
+      <main className="relative isolate lg:pl-72">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[460px] overflow-hidden">
+          <div className="pattern-diamonds-dark absolute inset-0 opacity-50" />
+          <div className="absolute -right-24 -top-36 size-[30rem] rounded-full bg-primary-fixed/60 blur-3xl" />
+          <div className="absolute left-1/3 top-16 size-72 rounded-full bg-secondary-fixed/40 blur-3xl" />
+        </div>
         <Outlet />
       </main>
     </div>
+  )
+}
+
+export default function AppLayout() {
+  return (
+    <NotificationsProvider>
+      <Frame />
+    </NotificationsProvider>
   )
 }

@@ -16,6 +16,9 @@ export default defineConfig({
       '/posts': BACKEND,
       '/comments': BACKEND,
       '/reports': BACKEND,
+      '/courses': BACKEND,
+      '/modules': BACKEND,
+      '/lessons': BACKEND,
     },
   },
 })
