@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import { Bell, BookOpen, Compass, FolderOpen, LogOut, Menu, Newspaper, UserRound, Users, UsersRound, X } from 'lucide-react'
+import { Bell, BookOpen, Compass, FolderOpen, LogOut, Menu, MessageCircle, Newspaper, UserRound, Users, UsersRound, X } from 'lucide-react'
 import Avatar from '../Avatar'
 import NotificationBell from '../notifications/NotificationBell'
 import { LangToggle, Logo, ThemeToggle } from '../ui'
 import { useAuth } from '../../auth/AuthContext'
+import { NetworkProvider, useNetwork } from '../../lib/network'
 import { NotificationsProvider } from '../../lib/notifications'
 import { usePrefs } from '../../lib/prefs'
 
@@ -12,7 +13,8 @@ const NAV = [
   { key: 'news', to: '/', Icon: Newspaper, end: true },
   { key: 'courses', to: '/learn', Icon: BookOpen },
   { key: 'mentoring', Icon: Compass },
-  { key: 'friends', Icon: Users },
+  { key: 'friends', to: '/friends', Icon: Users, badge: 'incoming_requests' },
+  { key: 'messages', to: '/messages', Icon: MessageCircle, badge: 'unread_messages', label: 'chat.navLabel' },
   { key: 'circles', Icon: UsersRound },
   { key: 'resources', Icon: FolderOpen },
   { key: 'notifications', Icon: Bell },
@@ -21,10 +23,11 @@ const NAV = [
 
 function NavList({ onNavigate }) {
   const { t } = usePrefs()
+  const { summary } = useNetwork()
   const base = 'flex items-center gap-3 rounded-xl px-3.5 py-2.5 font-display text-label-lg transition-all'
   return (
     <nav className="flex flex-col gap-1" aria-label={t('nav.menu')}>
-      {NAV.map(({ key, to, Icon, end }) =>
+      {NAV.map(({ key, to, Icon, end, badge, label }) =>
         to ? (
           <NavLink
             key={key}
@@ -36,7 +39,12 @@ function NavList({ onNavigate }) {
             }
           >
             <Icon className="size-5 shrink-0" aria-hidden="true" />
-            {t(`nav.${key}`)}
+            {t(label || `nav.${key}`)}
+            {badge && summary[badge] > 0 && (
+              <span className="ml-auto min-w-5 rounded-full bg-secondary px-1.5 text-center text-label-sm font-bold leading-5 text-white" aria-label={String(summary[badge])}>
+                {summary[badge]}
+              </span>
+            )}
           </NavLink>
         ) : (
           <span key={key} aria-disabled="true" className={`${base} cursor-not-allowed text-on-surface-variant/60`}>
@@ -79,6 +87,7 @@ function SideUser() {
 function Frame() {
   const { user } = useAuth()
   const { t } = usePrefs()
+  const { summary } = useNetwork()
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
 
@@ -97,9 +106,10 @@ function Frame() {
           type="button"
           onClick={() => setOpen(true)}
           aria-label={t('nav.menu')}
-          className="flex size-10 items-center justify-center rounded-xl text-on-surface-variant hover:bg-surface-container lg:hidden"
+          className="relative flex size-10 items-center justify-center rounded-xl text-on-surface-variant hover:bg-surface-container lg:hidden"
         >
           <Menu className="size-6" aria-hidden="true" />
+          {summary.incoming_requests + summary.unread_messages > 0 && <span className="absolute right-1.5 top-1.5 size-2.5 rounded-full bg-secondary ring-2 ring-surface" aria-hidden="true" />}
         </button>
         <Logo />
         <div className="ml-auto flex items-center gap-2">
@@ -157,7 +167,9 @@ function Frame() {
 export default function AppLayout() {
   return (
     <NotificationsProvider>
-      <Frame />
+      <NetworkProvider>
+        <Frame />
+      </NetworkProvider>
     </NotificationsProvider>
   )
 }

@@ -1,17 +1,36 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Bell, BellRing, CheckCheck, MessageCircle, ThumbsUp } from 'lucide-react'
+import { Bell, BellRing, CheckCheck, MessageCircle, ThumbsUp, UserCheck, UserPlus } from 'lucide-react'
 import Avatar from '../Avatar'
 import { useNotifications } from '../../lib/notifications'
 import { usePrefs } from '../../lib/prefs'
 import { timeAgo } from '../../lib/time'
 
+/** Where a notification leads. */
+export function notificationPath(n) {
+  if (n.type === 'friend_request') return '/friends?tab=requests'
+  if (n.type === 'friend_accepted') return '/friends'
+  return n.post_id ? `/post/${n.post_id}` : null
+}
+
+const KINDS = {
+  post_like: { Icon: ThumbsUp, tone: 'bg-secondary text-white' },
+  post_comment: { Icon: MessageCircle, tone: 'bg-primary-container text-white' },
+  friend_request: { Icon: UserPlus, tone: 'bg-secondary text-white' },
+  friend_accepted: { Icon: UserCheck, tone: 'bg-primary-container text-white' },
+}
+
 export function NotificationItem({ n, onOpen }) {
   const { t, lang } = usePrefs()
   const name = n.actor ? `${n.actor.first_name} ${n.actor.last_name}` : t('notif.someone')
-  const isLike = n.type === 'post_like'
-  const action = isLike ? t('notif.liked') : n.category === 'question' ? t('notif.answered') : t('notif.commented')
-  const Badge = isLike ? ThumbsUp : MessageCircle
+  const kind = KINDS[n.type] || KINDS.post_comment
+  const action =
+    n.type === 'post_like' ? t('notif.liked')
+    : n.type === 'friend_request' ? t('friends.notifRequest')
+    : n.type === 'friend_accepted' ? t('friends.notifAccepted')
+    : n.category === 'question' ? t('notif.answered')
+    : t('notif.commented')
+  const Badge = kind.Icon
   return (
     <button
       type="button"
@@ -20,7 +39,7 @@ export function NotificationItem({ n, onOpen }) {
     >
       <span className="relative shrink-0">
         <Avatar user={n.actor} size="sm" />
-        <span className={`absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full ring-2 ring-surface-lowest ${isLike ? 'bg-secondary text-white' : 'bg-primary-container text-white'}`}>
+        <span className={`absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full ring-2 ring-surface-lowest ${kind.tone}`}>
           <Badge className="size-2.5" aria-hidden="true" />
         </span>
       </span>
@@ -58,7 +77,8 @@ export default function NotificationBell() {
   function openItem(n) {
     markRead(n.id)
     setOpen(false)
-    if (n.post_id) navigate(`/post/${n.post_id}`)
+    const path = notificationPath(n)
+    if (path) navigate(path)
   }
 
   return (

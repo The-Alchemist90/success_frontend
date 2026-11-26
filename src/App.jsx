@@ -6,8 +6,10 @@ import { Spinner } from './components/ui'
 import CoursePage from './pages/CoursePage'
 import Courses from './pages/Courses'
 import Feed from './pages/Feed'
+import Friends from './pages/Friends'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Messages from './pages/Messages'
 import PostPage from './pages/PostPage'
 import Register from './pages/Register'
 import VerifyEmail from './pages/VerifyEmail'
@@ -41,6 +43,9 @@ export default function App() {
             }
           />
           <Route path="/learn/:courseId" element={<CoursePage />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/messages/:userId" element={<Messages />} />
           <Route path="/profile" element={<Home />} />
         </Route>
       </Route>

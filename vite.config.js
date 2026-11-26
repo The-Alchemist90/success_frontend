@@ -19,6 +19,8 @@ export default defineConfig({
       '/courses': BACKEND,
       '/modules': BACKEND,
       '/lessons': BACKEND,
+      '/connections': BACKEND,
+      '/chat': BACKEND,
     },
   },
 })

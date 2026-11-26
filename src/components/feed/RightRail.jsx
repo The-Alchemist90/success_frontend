@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { BookOpen, Check, CheckCheck, ChevronRight, HeartHandshake, MessageCircle, PenSquare, ThumbsUp } from 'lucide-react'
 import Avatar from '../Avatar'
-import { NotificationItem } from '../notifications/NotificationBell'
+import { NotificationItem, notificationPath } from '../notifications/NotificationBell'
 import { ProgressRing } from '../formExtras'
 import { useAuth } from '../../auth/AuthContext'
 import { useNotifications } from '../../lib/notifications'
@@ -177,7 +177,8 @@ function NotificationsCard() {
               n={n}
               onOpen={(item) => {
                 markRead(item.id)
-                if (item.post_id) navigate(`/post/${item.post_id}`)
+                const path = notificationPath(item)
+                if (path) navigate(path)
               }}
             />
           ))}
