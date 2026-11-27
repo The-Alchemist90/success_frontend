@@ -9,7 +9,7 @@ function Header({ children }) {
   return (
     <header className="sticky top-0 z-40 bg-surface/90 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-[1280px] items-center justify-between gap-3 px-4 md:px-6 lg:px-10">
-        <Link to="/" aria-label="Success">
+        <Link to="/" aria-label="Orbit">
           <Logo />
         </Link>
         <div className="flex items-center gap-2">
@@ -25,7 +25,7 @@ function Header({ children }) {
 export function TopBar({ className = '', logoClass = '' }) {
   return (
     <header className={`flex h-16 shrink-0 items-center justify-between gap-3 px-4 md:px-8 ${className}`}>
-      <Link to="/" aria-label="Success" className={logoClass}>
+      <Link to="/" aria-label="Orbit" className={logoClass}>
         <Logo />
       </Link>
       <div className="ml-auto flex items-center gap-2">

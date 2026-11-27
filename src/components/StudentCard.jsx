@@ -37,7 +37,7 @@ export default function StudentCard({
           <span className="flex size-7 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm">
             <GraduationCap className="size-4" aria-hidden="true" />
           </span>
-          <span className="font-display text-label-lg font-bold tracking-tight">SUCCESS · SUCCÈS</span>
+          <span className="font-display text-label-lg font-bold tracking-tight">Orbit</span>
         </div>
         <span className="rounded bg-white/20 px-2 py-0.5 font-mono text-label-sm tracking-widest backdrop-blur-sm">
           {academicYear()}

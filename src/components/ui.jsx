@@ -25,10 +25,10 @@ export function Logo() {
         <GraduationCap className="size-6" aria-hidden="true" />
       </div>
       <div className="flex flex-col">
-        <span className="font-display text-title-md leading-tight tracking-tight text-primary">
-          Success <span className="text-secondary">·</span> Succès
+                <span className="font-display text-title-md leading-tight tracking-tight text-primary">
+          Orbit
         </span>
-        <span className="font-display text-label-sm uppercase tracking-wider text-on-surface-variant">
+        <span className="hidden font-display text-label-sm uppercase tracking-wider text-on-surface-variant sm:block">
           {t('brand.tagline')}
         </span>
       </div>

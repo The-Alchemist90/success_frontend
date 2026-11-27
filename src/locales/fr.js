@@ -1,5 +1,7 @@
+import { Orbit } from "lucide-react";
+
 export default {
-  brand: { tagline: 'Cameroun · Yaoundé' },
+   brand: { tagline: 'Là où les esprits se connectent' },
   common: {
     loading: 'Chargement…',
     cancel: 'Annuler',
@@ -117,7 +119,7 @@ export default {
     confirm: 'Confirmer le mot de passe',
     strength: ['Très faible', 'Faible', 'Correct', 'Bon', 'Excellent'],
     charter:
-      'Je m’engage à respecter la charte d’intégrité académique de Success : travail personnel, aucune triche pendant les quiz chronométrés, respect de mes camarades.',
+            'Je m’engage à respecter la charte d’intégrité académique d’Orbit : travail personnel, aucune triche pendant les quiz chronométrés, respect de mes camarades.',
     submit: 'Créer mon compte étudiant',
     creating: 'Création du compte…',
     uploading: 'Envoi de la photo…',
@@ -189,7 +191,7 @@ export default {
   home: {
     cardTitle: 'Votre carte étudiante',
     welcome: 'Bienvenue, {name} !',
-    subtitle: 'Votre compte Success est prêt.',
+    subtitle: 'Votre compte Orbit est prêt.',
     verifyBanner: 'Votre adresse e-mail n’est pas encore vérifiée.',
     verifyCta: 'Vérifier maintenant',
     profile: 'Votre profil',

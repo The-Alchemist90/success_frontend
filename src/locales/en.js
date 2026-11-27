@@ -1,5 +1,5 @@
 export default {
-  brand: { tagline: 'Cameroon · Yaoundé' },
+    brand: { tagline: 'Where minds connect' },
   common: {
     loading: 'Loading…',
     cancel: 'Cancel',
@@ -117,7 +117,7 @@ export default {
     confirm: 'Confirm password',
     strength: ['Very weak', 'Weak', 'Fair', 'Good', 'Excellent'],
     charter:
-      'I commit to following the Success academic integrity charter: my own work, no cheating during timed quizzes, respect for my peers.',
+      'I commit to following the Orbit academic integrity charter: my own work, no cheating during timed quizzes, respect for my peers.',
     submit: 'Create my student account',
     creating: 'Creating your account…',
     uploading: 'Sending your photo…',
@@ -189,7 +189,7 @@ export default {
   home: {
     cardTitle: 'Your student card',
     welcome: 'Welcome, {name}!',
-    subtitle: 'Your Success account is ready.',
+    subtitle: 'Your Orbit account is ready.',
     verifyBanner: 'Your email address is not verified yet.',
     verifyCta: 'Verify now',
     profile: 'Your profile',
